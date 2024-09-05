@@ -93,14 +93,11 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         get => health; 
         set
         {
+            health = value;
+
             if (health < 1)
             {
                 OnDie();
-            }
-            else
-            {
-                health = value;
-                OnHit();
             }
         }
     }
@@ -189,7 +186,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
 
     public void OnHit()
     {
-        health--;
+        Health--;
         Debug.Log("플레이어 데미지받음");
     }
 
