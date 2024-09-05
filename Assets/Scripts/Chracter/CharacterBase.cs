@@ -206,4 +206,17 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     {
         scoreRatio = ratio;
     }
+
+    /// <summary>
+    /// 코인 획득 함수
+    /// </summary>
+    /// <param name="value">획득량</param>
+    public void GetScore(int value)
+    {
+        Debug.Log($"획득 전 스코어 : {Score}");
+
+        Score += value;
+
+        Debug.Log($"획득 후 스코어 : {Score}");
+    }
 }
