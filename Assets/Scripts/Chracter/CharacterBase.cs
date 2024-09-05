@@ -145,6 +145,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         Health = maxHealth; // 체력 초기화
 
         playerInput.OnJump += Jump;
+        Debug.Log("캐릭터 초기화 완료");
     }
 
     /// <summary>
