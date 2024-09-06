@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Factory : MonoBehaviour
+public class FactoryBase : MonoBehaviour
 {
     /// <summary>
     /// 팩토리가 가지는 최초의 오브젝트 량

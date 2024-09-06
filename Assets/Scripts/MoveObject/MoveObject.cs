@@ -7,7 +7,7 @@ public class MoveObject : MonoBehaviour
 {
     Rigidbody2D rigid;
 
-    private float moveSpeed = 5f;
+    public float moveSpeed = 5f;
 
     /// <summary>
     /// 디버그 할 때 활성화 하는 bool값 ( true면 정지 )

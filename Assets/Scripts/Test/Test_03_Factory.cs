@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Test_03_Factory : TestBase
 {
-    public Factory factory;
+    public FactoryBase factory;
 
     protected override void OnTest1(InputAction.CallbackContext context)
     {
