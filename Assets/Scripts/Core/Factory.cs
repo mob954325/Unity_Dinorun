@@ -61,9 +61,9 @@ public class Factory : MonoBehaviour
     /// <param name="rotate">오브젝트 회전</param>
     public void InstantiateProduct(Vector3? position = null, Quaternion? rotate = null)
     {
-        // 큐가 비어있으면 오브젝트 확장
+        CheckReadyQueue(); // 레디 큐 확인
 
-        // 있으면 소환
+        // 오브젝트 소환
         GameObject obj = readyQueue.Dequeue();
         obj.SetActive(true);
 
@@ -76,5 +76,37 @@ public class Factory : MonoBehaviour
         {
             curProduct.OnDeactive += () => { readyQueue.Enqueue(obj); }; // 비활성화 되면 레디큐에 추가
         }
+    }
+
+    /// <summary>
+    /// 레디 큐에 오브젝트가 남아있는 지 확인하는 함수 (비어있으면 오브젝트를 현재량의 2배 생성)
+    /// </summary>
+    /// <returns>큐가 비어있으면 false 아니면 true</returns>
+    private bool CheckReadyQueue()
+    {
+        bool result = false;
+
+        if(readyQueue.Count > 0)
+        {
+            result = true;
+        }
+        else
+        {
+            for(int i = 0; i < amount; i++)
+            {
+                GameObject obj = Instantiate(product, Vector3.zero, Quaternion.identity);
+
+                products.Add(obj);
+                readyQueue.Enqueue(obj);
+
+                obj.transform.SetParent(this.transform);
+                obj.gameObject.SetActive(false);
+            }
+
+            Debug.LogWarning($"{this.gameObject.name} 용량 증가 : {amount} -> {amount * 2}");
+            amount *= 2; // 용량 두 배씩 늘리기
+        }
+
+        return result;
     }
 }
