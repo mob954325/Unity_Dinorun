@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 4466707240001524026}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -154,7 +154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2026459295791179445}
   - component: {fileID: 6912141575585001130}
-  - component: {fileID: 8530945756734427072}
+  - component: {fileID: 1225465243965518646}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -205,7 +205,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8530945756734427072
+--- !u!114 &1225465243965518646
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -214,8 +214,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5018974221139026059}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93d93c3f7e9035f4aa11231833aa2573, type: 3}
+  m_Script: {fileID: 11500000, guid: 99baf8b6e92876441be865f77fd37334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  isDebug: 1
+  isDebug: 0

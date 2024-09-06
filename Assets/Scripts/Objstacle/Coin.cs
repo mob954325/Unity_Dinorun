@@ -22,7 +22,7 @@ public class Coin : Obstacle, IProduct
         if (player != null)
         {
             player.GetScore(scoreValue);
-            this.gameObject.SetActive(false); // 오브젝트 비활성화
+            transform.parent.gameObject.SetActive(false);   // 오브젝트 비활성화
         }
     }
 }

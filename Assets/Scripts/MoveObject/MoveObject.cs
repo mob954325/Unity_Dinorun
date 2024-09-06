@@ -26,9 +26,17 @@ public class MoveObject : MonoBehaviour
 
         if(transform.position.x < 0.1f)
         {
-            transform.position = new Vector3(12f, transform.position.y, transform.position.z); // 특정 위치에 가면 위치 초기화
+            OnReachedEndPosition();
         }
 
         transform.Translate(Vector2.left * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    /// <summary>
+    /// 정해진 위치까지 도달하면 실행하는 함수
+    /// </summary>
+    protected virtual void OnReachedEndPosition()
+    {
+        transform.position = new Vector3(12f, transform.position.y, transform.position.z); // 특정 위치에 가면 위치 초기화
     }
 }

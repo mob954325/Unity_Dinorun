@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3141200923784089722}
   - component: {fileID: 4446883104602405076}
-  - component: {fileID: 7696059904751795414}
+  - component: {fileID: 3834581855247433406}
   m_Layer: 0
   m_Name: Obstacle_CactusB
   m_TagString: Untagged
@@ -61,7 +61,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7696059904751795414
+--- !u!114 &3834581855247433406
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,10 +70,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2764857787685171365}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93d93c3f7e9035f4aa11231833aa2573, type: 3}
+  m_Script: {fileID: 11500000, guid: 99baf8b6e92876441be865f77fd37334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebug: 1
+  moveSpeed: 5
+  isDebug: 0
 --- !u!1 &3558038501033470538
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,9 +159,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 455670115
+  m_SortingLayer: 1
+  m_SortingOrder: 9
   m_Sprite: {fileID: 21300000, guid: f49c007801b3fe846803154bfa86dc81, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

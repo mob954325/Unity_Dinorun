@@ -112,7 +112,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// <summary>
     /// 점프 파워 (5f)
     /// </summary>
-    private const float jumpPower = 5f;
+    private const float jumpPower = 7f;
 
     // 유니티 함수 ======================================================================================================
 

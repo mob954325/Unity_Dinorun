@@ -2,8 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 팩토리가 생산하는 아이템 타입
+/// </summary>
+public enum FactoryType
+{
+    None,
+    Cactus,
+    Coin
+}
+
 public class FactoryBase : MonoBehaviour
 {
+    /// <summary>
+    /// 팩토리 오브젝트 타입
+    /// </summary>
+    public FactoryType FactoryType;
+
     /// <summary>
     /// 팩토리가 가지는 최초의 오브젝트 량
     /// </summary>
@@ -67,8 +82,8 @@ public class FactoryBase : MonoBehaviour
         GameObject obj = readyQueue.Dequeue();
         obj.SetActive(true);
 
-        obj.transform.position = position.Value;
-        obj.transform.rotation = rotate.Value;
+        obj.transform.position = position.GetValueOrDefault();
+        obj.transform.rotation = rotate.GetValueOrDefault();
 
         IProduct curProduct = obj.GetComponent<IProduct>();
 
