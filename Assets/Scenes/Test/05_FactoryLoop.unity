@@ -1310,6 +1310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  isHit: 0
 --- !u!114 &2063893177
 MonoBehaviour:
   m_ObjectHideFlags: 0

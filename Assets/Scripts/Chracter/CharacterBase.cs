@@ -28,6 +28,10 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     [Tooltip("캐릭터 타입은 인스펙터에서 초기화 해야함")]
     public ChracterType type = ChracterType.None;
 
+    /// <summary>
+    /// 캐릭터 스프라이트 색
+    /// </summary>
+    private SpriteRenderer sprite;
 
     private float score = 0;
 
@@ -114,12 +118,18 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// </summary>
     private const float jumpPower = 7f;
 
+    /// <summary>
+    /// 공격을 받았는지 확인하는 변수 ( 일정시간 지난 후 해제 )
+    /// </summary>
+    public bool isHit = false;
+
     // 유니티 함수 ======================================================================================================
 
     protected virtual void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
+        sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
         Init();
     }
 
@@ -182,10 +192,33 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         isFeverTime = false;
     }
 
+    /// <summary>
+    /// 공격 맞았을 때 실행하는 코루틴 함수
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator HitEffect()
+    {
+        float timeElapsed = 0f;
+
+        isHit = true;
+        sprite.color = new Color(1f, 1f, 1f, 0.25f);
+
+        while (timeElapsed < feverDurationTime)
+        {
+            timeElapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        sprite.color = new Color(1f, 1f, 1f, 1f);
+        isHit = false;
+    }
+
     // IHealth ========================================================================================================
 
     public void OnHit()
     {
+        StartCoroutine(HitEffect());
         Health--;
         Debug.Log("플레이어 데미지받음");
     }
