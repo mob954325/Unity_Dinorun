@@ -119,9 +119,15 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     private const float jumpPower = 7f;
 
     /// <summary>
+    /// 땅에 있는지 확인하는 변수 (땅에 있으면 true 아니면 false)
+    /// </summary>
+    private bool isGround = true;
+
+    /// <summary>
     /// 공격을 받았는지 확인하는 변수 ( 일정시간 지난 후 해제 )
     /// </summary>
     public bool isHit = false;
+
 
     // 유니티 함수 ======================================================================================================
 
@@ -138,6 +144,13 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         CurFeverAmount += Time.deltaTime;
         //Debug.Log($"피버 게이지량 : {CurFeverAmount}");
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        isGround = true;
+    }
+
+
 
     // 기능 함수 ========================================================================================================
 
@@ -170,7 +183,10 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// </summary>
     protected virtual void Jump()
     {
+        if(!isGround) return; 
+
         rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        isGround = false;
         Debug.Log("플레이어 점프");
     }
 
