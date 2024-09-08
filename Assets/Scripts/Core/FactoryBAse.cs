@@ -17,7 +17,7 @@ public class FactoryBase : MonoBehaviour
     /// <summary>
     /// 팩토리 오브젝트 타입
     /// </summary>
-    public FactoryType FactoryType;
+    public FactoryType factoryType;
 
     /// <summary>
     /// 팩토리가 가지는 최초의 오브젝트 량

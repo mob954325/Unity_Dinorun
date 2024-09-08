@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SpawnType
+{
+    None,
+    Jump
+}
+
 public class FactoryController : MonoBehaviour
 {
     public FactoryBase[] cactusFactories;
@@ -20,7 +26,7 @@ public class FactoryController : MonoBehaviour
     /// <summary>
     /// 스폰 딜레이 시간 (1f)
     /// </summary>
-    public float spawnDelay = 1f;
+    public float spawnDelay = 0.25f;
 
     /// <summary>
     /// 스폰 타이머
@@ -39,9 +45,13 @@ public class FactoryController : MonoBehaviour
 
             if(spawnTimer > spawnDelay) // 스폰 딜레이 시간이 지나면 오브젝트 생성
             {
-                if (!SpawnCactus())     // 선인장이 스폰이 안되면 
+                if(SpawnCactus())
                 {
-                    SpawnCoin();        // 코인 스폰
+                    SpawnCoin(false);
+                }
+                else
+                {
+                    SpawnCoin(true);
                 }
 
                 spawnTimer = 0f;
@@ -76,20 +86,31 @@ public class FactoryController : MonoBehaviour
     /// <returns>소환했으면 true 아니면 false</returns>
     private bool SpawnCactus()
     {
-        float spawnRand = Random.value;
-        if(spawnRand < 0.5f) return false; // 50% 확률로 스폰안함
+        float spawn = Random.value;
 
-        int rand = Random.Range(0, cactusFactories.Length);
-        cactusFactories[rand].InstantiateProduct(groundSpawnPoint.position);
+        if(spawn > 0.5f) // 50% 확률로 생성
+        {
+            int rand = Random.Range(0, cactusFactories.Length);
+            cactusFactories[rand].InstantiateProduct(groundSpawnPoint.position);
+            return true;
+        }
 
-        return true;
+        return false;
     }
 
     /// <summary>
     /// 코인을 스폰하는 함수
     /// </summary>
-    private void SpawnCoin()
+    /// <param name="isGround">스폰지점이 땅이면 true 아니면 false</param>
+    private void SpawnCoin(bool isGround)
     {
-        coinFactroy.InstantiateProduct(groundSpawnPoint.position);
+        if (isGround)
+        {
+            coinFactroy.InstantiateProduct(groundSpawnPoint.position);
+        }
+        else
+        {
+            coinFactroy.InstantiateProduct(skySpawnPoint.position);
+        }        
     }
 }
