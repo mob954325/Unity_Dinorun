@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8928908170361940458}
   - component: {fileID: 4849532877258223664}
   - component: {fileID: 1046085633764312980}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 2026459295791179445}
   - component: {fileID: 6912141575585001130}
   - component: {fileID: 1225465243965518646}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,4 +218,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  reset_x: 30
   isDebug: 0

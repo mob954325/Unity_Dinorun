@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6318446282083161648}
   - component: {fileID: 3918038534676624597}
   - component: {fileID: 5314103766216599529}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  reset_x: 24
   isDebug: 0
 --- !u!1 &2245338945742476147
 GameObject:
@@ -86,7 +87,7 @@ GameObject:
   - component: {fileID: 5165741318655384044}
   - component: {fileID: 8909131891370443596}
   - component: {fileID: 7961047825427720843}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}

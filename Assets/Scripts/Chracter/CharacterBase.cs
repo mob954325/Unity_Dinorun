@@ -31,6 +31,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// </summary>
     private SpriteRenderer sprite;
 
+    [SerializeField]
     private float score = 0;
 
     /// <summary>
@@ -43,7 +44,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         get => score;
         set
         {
-            score = value * scoreRatio;
+            score = value;
         }
     }
 
@@ -73,7 +74,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// <summary>
     /// 피버 최대량 ( 최대량에 도달하면 능력 발동 )
     /// </summary>
-    private const float maxFeverAmount = 100f;
+    private const float maxFeverAmount = 10f;
 
     /// <summary>
     /// 피버타임인지 확인하는 변수 (피버면 true 아니면 false)
@@ -88,7 +89,8 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// <summary>
     /// 현재 체력
     /// </summary>
-    public float health = 0;
+    [SerializeField]
+    private float health = 0;
 
     public float Health 
     { 
@@ -114,7 +116,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// <summary>
     /// 체력 감소 비율
     /// </summary>
-    public float healthReduceRatio = 1.2f;
+    private float healthReduceRatio = 1.2f;
 
     /// <summary>
     /// 점프 파워 (5f)
@@ -144,9 +146,15 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
 
     protected virtual void Update()
     {
-        CurFeverAmount += Time.deltaTime;
-        health -= Time.deltaTime * healthReduceRatio;
-        //Debug.Log($"피버 게이지량 : {CurFeverAmount}");
+        if(!isFeverTime)
+        {
+            CurFeverAmount += Time.deltaTime;
+        }
+
+        if(health > 0f)
+        {
+            health -= Time.deltaTime * healthReduceRatio;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -156,7 +164,6 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
             isGround = true;
         }
     }
-
 
     // 기능 함수 ========================================================================================================
 
@@ -234,7 +241,17 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         isHit = false;
     }
 
+    public bool CheckIsFever()
+    {
+        return isFeverTime;
+    }
+
     // IHealth ========================================================================================================
+
+    protected void Addhealth(float value)
+    {
+        health += value;
+    }
 
     public void OnHit()
     {
@@ -265,6 +282,6 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// <param name="value">획득량</param>
     public void GetScore(int value)
     {
-        Score += value;
+        Score += value * scoreRatio;
     }
 }

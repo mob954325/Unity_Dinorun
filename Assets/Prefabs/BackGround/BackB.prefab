@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6046783099741820644}
   - component: {fileID: 1113359871696352413}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8669468835664683110}
   - component: {fileID: 8445092617187361653}
   - component: {fileID: 4543216891003500519}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,4 +158,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.3
+  reset_x: 30
   isDebug: 0

@@ -6,6 +6,7 @@ public class Character_Normal : CharacterBase
 {
     protected override void ActiveAbility()
     {
+        base.ActiveAbility();
         StartCoroutine(SetScore(2.0f));
     }
 
@@ -20,6 +21,6 @@ public class Character_Normal : CharacterBase
             yield return null;
         }
 
-        SetScoreRatio(1.0f);
+        SetScoreRatio();
     }
 }
