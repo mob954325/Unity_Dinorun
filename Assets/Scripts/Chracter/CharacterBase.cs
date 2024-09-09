@@ -7,9 +7,7 @@ public enum ChracterType
 {
     None = 0,
     normal,     // 일반 타입 : 점수 두배
-    immune,     // 무적
-    magnet,     // 끌어당기기
-    healthgen   // 체력 회복
+    healthgen   // 체력 회복 : 장애물에 부딪히면 체력 회복
 }
 
 /// <summary>
@@ -90,9 +88,9 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// <summary>
     /// 현재 체력
     /// </summary>
-    private int health = 0;
+    public float health = 0;
 
-    public int Health 
+    public float Health 
     { 
         get => health; 
         set
@@ -109,9 +107,14 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// <summary>
     /// 최대 체력
     /// </summary>
-    private int maxHealth = 5;
+    private float maxHealth = 100;
 
-    public int MaxHealth { get; set; }
+    public float MaxHealth { get; set; }
+
+    /// <summary>
+    /// 체력 감소 비율
+    /// </summary>
+    public float healthReduceRatio = 1.2f;
 
     /// <summary>
     /// 점프 파워 (5f)
@@ -142,6 +145,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     protected virtual void Update()
     {
         CurFeverAmount += Time.deltaTime;
+        health -= Time.deltaTime * healthReduceRatio;
         //Debug.Log($"피버 게이지량 : {CurFeverAmount}");
     }
 
@@ -150,10 +154,8 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         if(collision.gameObject.CompareTag("Ground"))
         {
             isGround = true;
-            Debug.Log(isGround);
         }
     }
-
 
 
     // 기능 함수 ========================================================================================================
@@ -169,7 +171,6 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         Health = maxHealth; // 체력 초기화
 
         playerInput.OnJump += Jump;
-        Debug.Log("캐릭터 초기화 완료");
     }
 
     /// <summary>
@@ -191,7 +192,6 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
 
         rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         isGround = false;
-        Debug.Log("플레이어 점프");
     }
 
     /// <summary>
@@ -240,13 +240,12 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     {
         StartCoroutine(HitEffect());
         Health--;
-        Debug.Log("플레이어 데미지받음");
     }
 
     public void OnDie()
     {
         // 사망
-        Debug.Log("플레이어 사망");
+        //Debug.Log("플레이어 사망");
     }
 
     // 점수 관련 ========================================================================================================
@@ -266,10 +265,6 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// <param name="value">획득량</param>
     public void GetScore(int value)
     {
-        Debug.Log($"획득 전 스코어 : {Score}");
-
         Score += value;
-
-        Debug.Log($"획득 후 스코어 : {Score}");
     }
 }

@@ -24,7 +24,7 @@ public class FactoryController : MonoBehaviour
     private Transform skySpawnPoint;
 
     /// <summary>
-    /// 스폰 딜레이 시간 (1f)
+    /// 스폰 딜레이 시간
     /// </summary>
     public float spawnDelay = 0.25f;
 
@@ -32,32 +32,6 @@ public class FactoryController : MonoBehaviour
     /// 스폰 타이머
     /// </summary>
     private float spawnTimer = 0f;
-
-    /// <summary>
-    /// 스폰 타이머 접근 및 수정용 프로퍼티
-    /// </summary>
-    private float SpawnTimer
-    {
-        get => spawnTimer;
-        set
-        {
-            spawnTimer = value;
-
-            if(spawnTimer > spawnDelay) // 스폰 딜레이 시간이 지나면 오브젝트 생성
-            {
-                if(SpawnCactus())
-                {
-                    SpawnCoin(false);
-                }
-                else
-                {
-                    SpawnCoin(true);
-                }
-
-                spawnTimer = 0f;
-            }
-        }
-    }
 
     private void Awake()
     {
@@ -77,7 +51,21 @@ public class FactoryController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        SpawnTimer += Time.fixedDeltaTime;
+        spawnTimer += Time.fixedDeltaTime;
+
+        if(spawnTimer > spawnDelay)
+        {
+            if(SpawnCactus())
+            {
+                SpawnCoin(false);
+            }
+            else
+            {
+                SpawnCoin(true);
+            }
+
+            spawnTimer = 0f; // 타이머 초기화
+        }
     }
 
     /// <summary>

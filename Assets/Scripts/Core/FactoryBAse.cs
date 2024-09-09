@@ -39,6 +39,11 @@ public class FactoryBase : MonoBehaviour
     /// </summary>
     private Queue<GameObject> readyQueue;
 
+    /// <summary>
+    /// 오브젝트 개수 체크용 
+    /// </summary>
+    private int count = 0;
+
     // 초기화
     // 오브젝트 생성
     // 오브젝트 소환
@@ -59,13 +64,7 @@ public class FactoryBase : MonoBehaviour
 
         for(int i = 0; i < amount; i++)
         {
-            GameObject obj = Instantiate(product, Vector3.zero, Quaternion.identity);
-
-            products.Add(obj);
-            readyQueue.Enqueue(obj);
-
-            obj.transform.SetParent(this.transform);
-            obj.gameObject.SetActive(false);
+            ProductInit();
         }
     }
 
@@ -89,7 +88,7 @@ public class FactoryBase : MonoBehaviour
 
             if(curProduct != null)
             {
-                curProduct.OnDeactive += () => { readyQueue.Enqueue(obj); }; // 비활성화 되면 레디큐에 추가
+                curProduct.OnDeactive = () => { readyQueue.Enqueue(obj); }; // 비활성화 되면 레디큐에 추가
             }
         }
     }
@@ -110,13 +109,7 @@ public class FactoryBase : MonoBehaviour
         {
             for(int i = 0; i < amount; i++)
             {
-                GameObject obj = Instantiate(product, Vector3.zero, Quaternion.identity);
-
-                products.Add(obj);
-                readyQueue.Enqueue(obj);
-
-                obj.transform.SetParent(this.transform);
-                obj.gameObject.SetActive(false);
+                ProductInit();
             }
 
             Debug.LogWarning($"{this.gameObject.name} 용량 증가 : {amount} -> {amount * 2}");
@@ -124,5 +117,20 @@ public class FactoryBase : MonoBehaviour
         }
 
         return result;
+    }
+
+    /// <summary>
+    /// 팩토리가 관리하는 오브젝트 초기화 함수
+    /// </summary>
+    private void ProductInit()
+    {
+        GameObject obj = Instantiate(product, Vector3.zero, Quaternion.identity);
+
+        obj.name = $"{count++}";
+        products.Add(obj);
+        readyQueue.Enqueue(obj);
+
+        obj.transform.SetParent(this.transform);
+        obj.gameObject.SetActive(false);
     }
 }

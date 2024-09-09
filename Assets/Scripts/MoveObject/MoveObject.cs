@@ -10,6 +10,11 @@ public class MoveObject : MonoBehaviour
     public float moveSpeed = 5f;
 
     /// <summary>
+    /// 다시 되돌아가는 좌표 x값
+    /// </summary>
+    public float reset_x = 30f;
+
+    /// <summary>
     /// 디버그 할 때 활성화 하는 bool값 ( true면 정지 )
     /// </summary>
     public bool isDebug = false;
@@ -37,6 +42,6 @@ public class MoveObject : MonoBehaviour
     /// </summary>
     protected virtual void OnReachedEndPosition()
     {
-        transform.position = new Vector3(12f, transform.position.y, transform.position.z); // 특정 위치에 가면 위치 초기화
+        transform.position = new Vector3(reset_x, transform.position.y, transform.position.z); // 특정 위치에 가면 위치 초기화
     }
 }

@@ -710,6 +710,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  health: 0
+  healthReduceRatio: 1.2
   isHit: 0
 --- !u!114 &2063893177
 MonoBehaviour:
@@ -735,7 +737,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -748,7 +750,7 @@ Transform:
   m_GameObject: {fileID: 2135003706}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.87, y: 2.03, z: 0}
+  m_LocalPosition: {x: 5.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -886,15 +888,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4255070471020489976, guid: 0b1c97f7da61736478bd1e0f7d827453, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.64
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4255070471020489976, guid: 0b1c97f7da61736478bd1e0f7d827453, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4255070471020489976, guid: 0b1c97f7da61736478bd1e0f7d827453, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.033584505
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4255070471020489976, guid: 0b1c97f7da61736478bd1e0f7d827453, type: 3}
       propertyPath: m_LocalRotation.w
