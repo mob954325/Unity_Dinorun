@@ -76,20 +76,21 @@ public class FactoryBase : MonoBehaviour
     /// <param name="rotate">오브젝트 회전</param>
     public void InstantiateProduct(Vector3? position = null, Quaternion? rotate = null)
     {
-        CheckReadyQueue(); // 레디 큐 확인
-
-        // 오브젝트 소환
-        GameObject obj = readyQueue.Dequeue();
-        obj.SetActive(true);
-
-        obj.transform.position = position.GetValueOrDefault();
-        obj.transform.rotation = rotate.GetValueOrDefault();
-
-        IProduct curProduct = obj.GetComponent<IProduct>();
-
-        if(curProduct != null)
+        if(CheckReadyQueue()) // 레디 큐 확인
         {
-            curProduct.OnDeactive += () => { readyQueue.Enqueue(obj); }; // 비활성화 되면 레디큐에 추가
+            // 오브젝트 소환
+            GameObject obj = readyQueue.Dequeue();
+            obj.SetActive(true);
+
+            obj.transform.position = position.GetValueOrDefault();
+            obj.transform.rotation = rotate.GetValueOrDefault();
+
+            IProduct curProduct = obj.GetComponentInChildren<Obstacle>() as IProduct;
+
+            if(curProduct != null)
+            {
+                curProduct.OnDeactive += () => { readyQueue.Enqueue(obj); }; // 비활성화 되면 레디큐에 추가
+            }
         }
     }
 
@@ -101,11 +102,11 @@ public class FactoryBase : MonoBehaviour
     {
         bool result = false;
 
-        if(readyQueue.Count > 0)
+        if(readyQueue.Count > 0) // 큐가 존재하면 true 반환
         {
             result = true;
         }
-        else
+        else // 아니면 용량 확장
         {
             for(int i = 0; i < amount; i++)
             {

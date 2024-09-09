@@ -147,7 +147,11 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        isGround = true;
+        if(collision.gameObject.CompareTag("Ground"))
+        {
+            isGround = true;
+            Debug.Log(isGround);
+        }
     }
 
 

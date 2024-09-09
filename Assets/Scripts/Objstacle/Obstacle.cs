@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class Obstacle : MonoBehaviour
+public class Obstacle : MonoBehaviour, IProduct
 {
     Collider2D coll;
+
+    public Action OnDeactive { get; set; }
 
     private void Awake()
     {
@@ -16,6 +19,11 @@ public class Obstacle : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         OnTrigger(collision.gameObject.GetComponent<CharacterBase>());
+    }
+
+    private void OnDisable()
+    {
+        OnDeactive?.Invoke();
     }
 
     /// <summary>
