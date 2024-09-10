@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,10 @@ public enum ChracterType
 [RequireComponent(typeof(PlayerInput))]
 public abstract class CharacterBase : MonoBehaviour, IHealth
 {
+    GameManager manager;
+
     private Rigidbody2D rigid;
+    private Animator anim;
     protected PlayerInput playerInput;
 
     /// <summary>
@@ -31,7 +35,13 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// </summary>
     private SpriteRenderer sprite;
 
-    [SerializeField]
+    public Action<float> OnScoreChange;
+    public Action<float> OnFeverRatioChange;
+    public Action<float> OnHpRatioChange;
+
+    /// <summary>
+    /// 캐릭터 스코어
+    /// </summary>
     private float score = 0;
 
     /// <summary>
@@ -45,6 +55,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         set
         {
             score = value;
+            OnScoreChange?.Invoke(score);
         }
     }
 
@@ -62,8 +73,9 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         set
         {
             curFeverAmount = value;
+            OnFeverRatioChange?.Invoke(curFeverAmount/maxFeverAmount);
 
-            if(curFeverAmount > maxFeverAmount)
+            if (curFeverAmount > maxFeverAmount)
             {
                 curFeverAmount = 0f; // 초기화
                 ActiveAbility();
@@ -98,6 +110,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         set
         {
             health = value;
+            OnHpRatioChange?.Invoke(health/maxHealth);
 
             if (health < 1)
             {
@@ -116,7 +129,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// <summary>
     /// 체력 감소 비율
     /// </summary>
-    private float healthReduceRatio = 1.2f;
+    private float healthReduceRatio = 1.5f;
 
     /// <summary>
     /// 점프 파워 (5f)
@@ -133,19 +146,31 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// </summary>
     public bool isHit = false;
 
+    /// <summary>
+    /// isPause 애니메이션 파라미터
+    /// </summary>
+    int isPauseToHash = Animator.StringToHash("isPause");
 
     // 유니티 함수 ======================================================================================================
 
     protected virtual void Awake()
     {
+        Transform child = transform.GetChild(0);
+
+        manager = FindAnyObjectByType<GameManager>();
         rigid = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
-        sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        sprite = child.GetComponent<SpriteRenderer>();
+        anim = child.GetComponent<Animator>();
+
         Init();
     }
 
     protected virtual void Update()
     {
+        if (!manager.isPlaying)
+            return;
+
         if(!isFeverTime)
         {
             CurFeverAmount += Time.deltaTime;
@@ -178,6 +203,8 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         Health = maxHealth; // 체력 초기화
 
         playerInput.OnJump += Jump;
+        manager.OnGamePlay += AnimationPlay;
+        manager.OnGameStop += AnimationStop;
     }
 
     /// <summary>
@@ -228,7 +255,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         float timeElapsed = 0f;
 
         isHit = true;
-        sprite.color = new Color(1f, 1f, 1f, 0.25f);
+        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0.25f);
 
         while (timeElapsed < feverDurationTime)
         {
@@ -237,13 +264,23 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
             yield return null;
         }
 
-        sprite.color = new Color(1f, 1f, 1f, 1f);
+        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1f);
         isHit = false;
     }
 
     public bool CheckIsFever()
     {
         return isFeverTime;
+    }
+
+    private void AnimationStop()
+    {
+        anim.SetBool(isPauseToHash, true);
+    }
+
+    private void AnimationPlay()
+    {
+        anim.SetBool(isPauseToHash, false);
     }
 
     // IHealth ========================================================================================================

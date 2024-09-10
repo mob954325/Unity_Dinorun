@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class MoveObject : MonoBehaviour
 {
+    GameManager manager;
+
     Rigidbody2D rigid;
 
     public float moveSpeed = 5f;
@@ -15,18 +17,22 @@ public class MoveObject : MonoBehaviour
     public float reset_x = 30f;
 
     /// <summary>
-    /// 디버그 할 때 활성화 하는 bool값 ( true면 정지 )
+    /// 멈출지 확인하는 변수 (true면 정지)
     /// </summary>
-    public bool isDebug = false;
+    public bool isStop = false;
 
     private void Awake()
     {
+        manager = FindFirstObjectByType<GameManager>();
         rigid = GetComponent<Rigidbody2D>();
+
+        manager.OnGamePlay += SetUnStop;
+        manager.OnGameStop += SetStop;
     }
 
     private void FixedUpdate()
     {
-        if (isDebug) // 디버그 모드면 무시
+        if (isStop)
             return;
 
         if(transform.position.x < 0.1f)
@@ -43,5 +49,15 @@ public class MoveObject : MonoBehaviour
     protected virtual void OnReachedEndPosition()
     {
         transform.position = new Vector3(reset_x, transform.position.y, transform.position.z); // 특정 위치에 가면 위치 초기화
+    }
+
+    private void SetStop()
+    {
+        isStop = true;
+    }
+
+    private void SetUnStop()
+    {
+        isStop = false;
     }
 }
