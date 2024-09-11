@@ -206,6 +206,8 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     {
         if(collision.gameObject.CompareTag("Ground"))
         {
+            if(!isGround) manager.soundManager.PlayAudio(2); // 착지 할 때 실행
+
             isGround = true;
             anim.SetBool(isJumpToHash, !isGround);
         }
@@ -249,6 +251,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         isGround = false;
 
         anim.SetBool(isJumpToHash, !isGround);
+        manager.soundManager.PlayAudio(1);
     }
 
     /// <summary>
@@ -325,10 +328,11 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         Debug.Log("플레이어 사망");
         anim.SetTrigger(dieToHash);
         manager.OnGameOver?.Invoke(score);
+        manager.soundManager.PlayAudio(3);
     }
 
     // 점수 관련 ========================================================================================================
-    
+
     /// <summary>
     /// 스코어 획득 비율 설정 함수
     /// </summary>

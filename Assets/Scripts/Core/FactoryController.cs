@@ -51,6 +51,9 @@ public class FactoryController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!GameManager.Instance.isPlaying)
+            return;
+
         spawnTimer += Time.fixedDeltaTime;
 
         if(spawnTimer > spawnDelay)

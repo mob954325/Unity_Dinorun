@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public SoundManager soundManager;
+
     public GameObject[] characters;
 
     /// <summary>
@@ -71,6 +73,9 @@ public class GameManager : MonoBehaviour
             gameOverUI.SetGameOverScore(score);
             OnGamePause?.Invoke();
         };
+
+        child = transform.GetChild(2);
+        soundManager = child.GetComponent<SoundManager>();
 
         gameOverUI.gameObject.SetActive(false);
     }
