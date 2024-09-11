@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class ScoreUI : MonoBehaviour
 {
-    CharacterBase player;
     TextMeshProUGUI scoreText;
 
     private void Awake()
     {
         scoreText = GetComponent<TextMeshProUGUI>();
-        player = FindAnyObjectByType<CharacterBase>();
+    }
 
-        player.OnScoreChange += SetScoreText;
+    public void Init(CharacterBase player)
+    {
+        player.OnScoreChange += SetScoreText;        
     }
 
     /// <summary>

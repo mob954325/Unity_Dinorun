@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.U2D;
 
 public enum ChracterType
 {
@@ -35,14 +36,10 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// </summary>
     private SpriteRenderer sprite;
 
-    public Action<float> OnScoreChange;
-    public Action<float> OnFeverRatioChange;
-    public Action<float> OnHpRatioChange;
-
     /// <summary>
     /// 캐릭터 스코어
     /// </summary>
-    private float score = 0;
+    private float score = -1;
 
     /// <summary>
     /// 스코어 획득 배율 ( 기본 1.0 )
@@ -62,7 +59,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// <summary>
     /// 현재 피버 게이지량
     /// </summary>
-    private float curFeverAmount;
+    private float curFeverAmount = -1;
 
     /// <summary>
     /// 현재 피버 게이지량 수정 및 접근용 프로퍼티
@@ -102,7 +99,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// 현재 체력
     /// </summary>
     [SerializeField]
-    private float health = 0;
+    private float health = -1;
 
     public float Health 
     { 
@@ -129,7 +126,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// <summary>
     /// 체력 감소 비율
     /// </summary>
-    private float healthReduceRatio = 1.5f;
+    private float healthReduceRatio = 2.5f;
 
     /// <summary>
     /// 점프 파워 (5f)
@@ -147,9 +144,34 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     public bool isHit = false;
 
     /// <summary>
-    /// isPause 애니메이션 파라미터
+    /// 스코어가 변했을 때 호출되는 델리게이트
+    /// </summary>
+    public Action<float> OnScoreChange;
+
+    /// <summary>
+    /// 피버값이 변했을 때 호출되는 델리게이트
+    /// </summary>
+    public Action<float> OnFeverRatioChange;
+
+    /// <summary>
+    /// 체력값이 변했을 때 호출되는 델리게이트
+    /// </summary>
+    public Action<float> OnHpRatioChange;
+
+    /// <summary>
+    /// isPause 애니메이션 파라미터 (bool)
     /// </summary>
     int isPauseToHash = Animator.StringToHash("isPause");
+
+    /// <summary>
+    /// isJump 애니메이션 파라미터 (bool)
+    /// </summary>
+    int isJumpToHash = Animator.StringToHash("isJump");
+
+    /// <summary>
+    /// die 애니메이션 파라미터 (trigger)
+    /// </summary>
+    int dieToHash = Animator.StringToHash("die");
 
     // 유니티 함수 ======================================================================================================
 
@@ -157,13 +179,11 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     {
         Transform child = transform.GetChild(0);
 
-        manager = FindAnyObjectByType<GameManager>();
+        manager = GameManager.Instance;
         rigid = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         sprite = child.GetComponent<SpriteRenderer>();
         anim = child.GetComponent<Animator>();
-
-        Init();
     }
 
     protected virtual void Update()
@@ -187,6 +207,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         if(collision.gameObject.CompareTag("Ground"))
         {
             isGround = true;
+            anim.SetBool(isJumpToHash, !isGround);
         }
     }
 
@@ -195,7 +216,7 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     /// <summary>
     /// 캐릭터 클래스 초기화 함수
     /// </summary>
-    protected virtual void Init()
+    public virtual void Init()
     {
         curFeverAmount = 0f;
         Score = 0;
@@ -203,8 +224,8 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         Health = maxHealth; // 체력 초기화
 
         playerInput.OnJump += Jump;
-        manager.OnGamePlay += AnimationPlay;
-        manager.OnGameStop += AnimationStop;
+        manager.OnGamePlay += Animation_RunPlay;
+        manager.OnGamePause += Animation_RunStop;
     }
 
     /// <summary>
@@ -226,6 +247,8 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
 
         rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         isGround = false;
+
+        anim.SetBool(isJumpToHash, !isGround);
     }
 
     /// <summary>
@@ -273,12 +296,12 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
         return isFeverTime;
     }
 
-    private void AnimationStop()
+    private void Animation_RunStop()
     {
         anim.SetBool(isPauseToHash, true);
     }
 
-    private void AnimationPlay()
+    private void Animation_RunPlay()
     {
         anim.SetBool(isPauseToHash, false);
     }
@@ -299,7 +322,9 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     public void OnDie()
     {
         // 사망
-        //Debug.Log("플레이어 사망");
+        Debug.Log("플레이어 사망");
+        anim.SetTrigger(dieToHash);
+        manager.OnGameOver?.Invoke(score);
     }
 
     // 점수 관련 ========================================================================================================

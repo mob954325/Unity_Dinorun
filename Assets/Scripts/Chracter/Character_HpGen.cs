@@ -9,7 +9,7 @@ public class Character_HpGen : CharacterBase
     /// </summary>
     public void OnCactusHit()
     {
-        GetScore(200);
-        Addhealth(5f);
+        GetScore(100);
+        Addhealth(2f);
     }
 }

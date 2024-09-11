@@ -122,7 +122,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.50340724}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -133,7 +133,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.9}
+  m_Size: {x: 0.3, y: 0.8751397}
   m_EdgeRadius: 0
 --- !u!1 &8812241657069545966
 GameObject:
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 2925844222687030261}
   - component: {fileID: 7156920856735498439}
   m_Layer: 0
-  m_Name: RunningMan
+  m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -209,12 +209,12 @@ SpriteRenderer:
   m_SortingLayerID: 455670115
   m_SortingLayer: 1
   m_SortingOrder: 10
-  m_Sprite: {fileID: 1173802666, guid: 6b992d9084484ea4f93b1f5d0d3a23c6, type: 3}
+  m_Sprite: {fileID: -2311659948842064771, guid: 51c81e11cf1b83741a6d4debdf26562c, type: 3}
   m_Color: {r: 1, g: 0.051568307, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.625, y: 0.875}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

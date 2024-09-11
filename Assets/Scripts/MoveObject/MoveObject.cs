@@ -23,11 +23,16 @@ public class MoveObject : MonoBehaviour
 
     private void Awake()
     {
-        manager = FindFirstObjectByType<GameManager>();
         rigid = GetComponent<Rigidbody2D>();
 
+    }
+
+    private void Start()
+    {
+        manager = GameManager.Instance;
+
         manager.OnGamePlay += SetUnStop;
-        manager.OnGameStop += SetStop;
+        manager.OnGamePause += SetStop;        
     }
 
     private void FixedUpdate()

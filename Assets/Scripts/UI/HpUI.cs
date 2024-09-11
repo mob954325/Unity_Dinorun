@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class HpUI : GaugeUI
 {
-    CharacterBase player;
-
-    protected override void Awake()
+    public override void Init(CharacterBase player)
     {
-        base.Awake();
-        player = FindAnyObjectByType<CharacterBase>();
-
         player.OnHpRatioChange += SetGauge;
     }
 }

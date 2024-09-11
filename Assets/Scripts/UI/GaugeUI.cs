@@ -13,6 +13,11 @@ public class GaugeUI : MonoBehaviour
         gauge = child.GetComponent<Slider>();
     }
 
+    public virtual void Init(CharacterBase player)
+    {
+        // 초기화 내용
+    }
+
     /// <summary>
     /// 게이지 설정 함수
     /// </summary>
