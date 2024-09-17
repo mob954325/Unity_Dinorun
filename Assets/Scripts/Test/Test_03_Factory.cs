@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,3 +14,4 @@ public class Test_03_Factory : TestBase
         factory.InstantiateProduct(spawnPoint.position, Quaternion.identity);
     }
 }
+#endif

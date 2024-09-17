@@ -20,7 +20,7 @@ public class MenuBtnUI : MonoBehaviour
     /// <summary>
     /// 게임 퇴장시 실행하는 함수
     /// </summary>
-    private void OnExitGame()
+    public void OnExitGame()
     {
         Application.Quit();
     }
