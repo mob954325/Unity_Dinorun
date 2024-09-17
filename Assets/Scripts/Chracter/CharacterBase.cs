@@ -196,9 +196,9 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
             CurFeverAmount += Time.deltaTime;
         }
 
-        if(health > 0f)
+        if(Health > 0f)
         {
-            health -= Time.deltaTime * healthReduceRatio;
+            Health -= Time.deltaTime * healthReduceRatio;
         }
     }
 
@@ -236,7 +236,6 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     protected virtual void ActiveAbility()
     {
         // 캐릭터 능력 내용
-        Debug.Log("능력 발동");
         StartCoroutine(ActiveFeverTime());
     }
 
@@ -325,7 +324,6 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     public void OnDie()
     {
         // 사망
-        Debug.Log("플레이어 사망");
         anim.SetTrigger(dieToHash);
         manager.OnGameOver?.Invoke(score);
         manager.soundManager.PlayAudio(3);
@@ -349,5 +347,6 @@ public abstract class CharacterBase : MonoBehaviour, IHealth
     public void GetScore(int value)
     {
         Score += value * scoreRatio;
+        manager.soundManager.PlayAudio(3);
     }
 }
