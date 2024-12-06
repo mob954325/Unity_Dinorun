@@ -106,6 +106,13 @@ public class GameManager : MonoBehaviour
         OnGamePause?.Invoke();
     }
 
+    public void UnPause()
+    {
+        isPlaying = true;
+        pausePanel.gameObject.SetActive(false);
+        OnGamePlay?.Invoke();
+    }
+
     public void BeckToMenu()
     {
         SceneManager.LoadScene(0);

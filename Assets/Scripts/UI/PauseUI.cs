@@ -15,5 +15,6 @@ public class PauseUI : MonoBehaviour
     private void Start()
     {
         btn.onClick.AddListener(() => GameManager.Instance.soundManager.PlayAudio(0));
+        btn.onClick.AddListener(() => GameManager.Instance.Pause());
     }
 }
